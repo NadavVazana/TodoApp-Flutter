@@ -12,11 +12,25 @@ class EditDialog extends StatefulWidget {
 }
 
 class _EditDialogState extends State<EditDialog> {
+  bool isInputUnvalid = false;
   final TextEditingController _controller = TextEditingController();
   @override
   void initState() {
     super.initState();
     _controller.text = widget.initValue;
+  }
+
+  void onConfirm() {
+    if (_controller.text != '') {
+      setState(() {
+        isInputUnvalid = false;
+      });
+      widget.onConfirm?.call(_controller.text);
+    } else {
+      setState(() {
+        isInputUnvalid = true;
+      });
+    }
   }
 
   @override
@@ -38,6 +52,16 @@ class _EditDialogState extends State<EditDialog> {
                   ),
                 ),
                 TextField(
+                  onChanged: (String? value) {
+                    if (value != '') {
+                      setState(() {
+                        isInputUnvalid = false;
+                      });
+                    }
+                  },
+                  decoration: InputDecoration(
+                      error:
+                          isInputUnvalid ? const Text('Input is empty') : null),
                   controller: _controller,
                 ),
                 Padding(
@@ -48,7 +72,7 @@ class _EditDialogState extends State<EditDialog> {
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.orangeAccent),
                           onPressed: () {
-                            widget.onConfirm?.call(_controller.text);
+                            onConfirm();
                           },
                           child: const Text(
                             'Confirm',

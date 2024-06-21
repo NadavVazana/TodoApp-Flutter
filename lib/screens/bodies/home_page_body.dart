@@ -9,14 +9,23 @@ class HomePageBody extends StatefulWidget {
 }
 
 class _HomePageBodyState extends State<HomePageBody> {
-  late String inputValue;
-  List<Todo> todoList = [Todo(isDone: true, text: 'First todo')];
+  late String inputValue = '';
+  bool isInputUnvalid = false;
+  List<Todo> todoList = [Todo(isDone: false, text: 'First todo')];
 
   void onAddTodo() {
-    setState(() {
-      todoList.insert(0, Todo(isDone: false, text: inputValue));
-      _textEditingController.clear();
-    });
+    if (inputValue != '') {
+      setState(() {
+        todoList.insert(0, Todo(isDone: false, text: inputValue));
+        _textEditingController.clear();
+        inputValue = '';
+        isInputUnvalid = false;
+      });
+    } else {
+      setState(() {
+        isInputUnvalid = true;
+      });
+    }
   }
 
   void onTodoChange(bool? value, int? index) {
@@ -76,8 +85,9 @@ class _HomePageBodyState extends State<HomePageBody> {
                     inputValue = value;
                   });
                 },
-                decoration:
-                    const InputDecoration(label: Text('Write a TODO...'))),
+                decoration: InputDecoration(
+                    errorText: isInputUnvalid ? 'Input field is empty' : null,
+                    label: const Text('Write a TODO...'))),
             const SizedBox(
               height: 20,
             ),

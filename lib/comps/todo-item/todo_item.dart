@@ -27,49 +27,59 @@ class _TodoItemState extends State<TodoItem> {
   Widget build(BuildContext context) {
     return SizedBox(
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Checkbox(value: widget.todo.isDone, onChanged: widget.onChange),
-          MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  widget.onChange?.call(!widget.todo.isDone);
-                });
-              },
-              child: Text(
-                widget.todo.text,
-                style: TextStyle(
-                    fontSize: 19,
-                    decoration: widget.todo.isDone
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none),
-              ),
-            ),
-          ),
-          MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: GestureDetector(
-                onTap: () {
-                  widget.onDelete?.call();
-                },
-                child: const Icon(
-                  Icons.close,
-                  size: 24,
+          Row(
+            children: [
+              Checkbox(value: widget.todo.isDone, onChanged: widget.onChange),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      widget.onChange?.call(!widget.todo.isDone);
+                    });
+                  },
+                  child: Text(
+                    widget.todo.text,
+                    style: TextStyle(
+                        fontSize: 19,
+                        decoration: widget.todo.isDone
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none),
+                  ),
                 ),
-              )),
-          GestureDetector(
-            onTap: () {
-              widget.onEdit?.call();
-            },
-            child: const MouseRegion(
-              cursor: SystemMouseCursors.click,
-              child: Icon(
-                Icons.edit,
-                size: 22,
               ),
-            ),
+            ],
+          ),
+          Row(
+            children: [
+              MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: GestureDetector(
+                    onTap: () {
+                      widget.onDelete?.call();
+                    },
+                    child: const Icon(
+                      Icons.close,
+                      size: 24,
+                    ),
+                  )),
+              const SizedBox(width: 5),
+              GestureDetector(
+                onTap: () {
+                  widget.onEdit?.call();
+                },
+                child: const MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Icon(
+                    Icons.edit,
+                    size: 22,
+                  ),
+                ),
+              )
+            ],
           )
         ],
       ),

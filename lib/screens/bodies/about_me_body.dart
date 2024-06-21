@@ -39,6 +39,7 @@ class AboutMeBody extends StatelessWidget {
             FractionallySizedBox(
               widthFactor: 0.7,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
                     width: 50,

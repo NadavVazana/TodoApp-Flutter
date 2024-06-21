@@ -7,9 +7,18 @@ class TodoScaffold extends StatefulWidget {
   TodoScaffold({super.key, this.body});
 
   final List<BottomNavigationBarItem> bottomBarItems = [
-    const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
     const BottomNavigationBarItem(
-        icon: Icon(Icons.info_outline_rounded), label: 'About me')
+        icon: Icon(
+          Icons.home,
+          size: 30,
+        ),
+        label: 'Home'),
+    const BottomNavigationBarItem(
+        icon: Icon(
+          Icons.info_outline_rounded,
+          size: 30,
+        ),
+        label: 'About me')
   ];
 
   @override
@@ -64,6 +73,7 @@ class _TodoScaffoldState extends State<TodoScaffold> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: bottomBarSelectedIndex,
         onTap: onSelectBottomItem,
+        unselectedFontSize: 14,
         selectedItemColor: Colors.orangeAccent,
         items: widget.bottomBarItems,
       ),
